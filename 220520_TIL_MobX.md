@@ -16,11 +16,10 @@
 	- store란 프로젝트에redux를 적용하기 위해 필요한 것으로, 프로젝트에는 단 한 개의 store만 가질 수 있으며 상태(state)의 중앙 저장소라고 할 수 있다.
 - observable을 기본적으로 사용하고, 절대적으로 필요한 경우에만 state를 변경한다.
 	- observable이란 사전적으로는 '관찰할 수 있는'이라는 뜻을 가지고 있다. 즉, observable객체는 어떤 '객체'를 관찰할 수 있는 형태로 만드는 것을 말하며, 이 객체에 따라 실제 관찰하는 값(=스트림에 흘려 보내는 값) 혹은 관찰 대상인 사건(=이벤트)이 결정된다.
-- MobX는 observable을 사용하면 properties, entire objects, arrays, Maps, Sets 등을 모두 자동으로 관찰 가능하게끔 만들 수 있다. 여기에 가장 중요한 어노테이션(annotation)으로는 3가지가 있다.
+- MobX는 observable을 사용하면 properties, entire objects, arrays, Maps, Sets 등을 모두 자동으로 관찰 가능하게끔 만들 수 있다. 여기에 가장 중요한 어노테이션(annotation)으로는 몇가지가 있다.
 	- observable: 추적 가능한 state 정의
-	- action: state를 변경하는 메소드
-	- computed: state와 캐시로부터 새로운 결과를 반환한다.
-	- reaction: 모든 액션이 끝난 다음에 reaction이 
+	- action: state를 변경하는 메소드 표시
+	- computed: state로부터 새로운 사실을 도출하고 그 결과값을 캐시하는 getter를 나타낸다.
 - Typescript를 기반으로 만들어짐
 
 ### MobX 주요 요소
@@ -124,4 +123,7 @@ export default App;
 - 프로젝트의 규모가 어느 정도 있고, state가 많이 자주 변하는 경우에는 쓰기가 어렵다.
 - MobX가 Redux보다 코드가 적어지는 것은 사실이나, 보기 간단해지는 만큼 코드들을 체계적으로 분리하기 어렵다고 한다.
 
-- 
+## MobX6의 특징
+- 장점 중 하나였던 데코레이터를 사용하지 않는다.
+- 데코레이터를 사용하지 않는 대신에 makeObservable이라는 기능을 추가하였다. 이는 constructor의 각 변수에 대해 observable인지 action인지 먼저 정의하는 기능이라 할 수 있다.
+- inject를 사용하지 않는다. 대신 MobXProviderContext를 사용하여 좀 더 react hooks에 친화적으로 수정되었다.
