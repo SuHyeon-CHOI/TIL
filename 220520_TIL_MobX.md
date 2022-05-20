@@ -118,6 +118,68 @@ export default App;
 ```
 - 실행시켜보면 증가버튼은 3증가, 감소버튼은 2감소되는 것이 실시간으로 화면에 보여진다.
 
+### 다른 예제 - MobX를 이용한 React Component 구현하기
+- App.js
+```
+import React, { Component } from 'react';
+import Counter from './Counter';
+
+class App extends Component {
+  render() {
+    return (
+      <div>
+        <Counter />
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+- Counter.js
+```
+import React, { Component } from 'react';
+import { decorate, observable, action } from 'mobx';
+import { observer } from 'mobx-react';
+
+class Counter extends Component {
+  number = 0;
+
+  increase = () => {
+    this.number++;
+  }
+
+  decrease = () => {
+    this.number--;
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>{this.number}</h1>
+        <button onClick={this.increase}>+1</button>
+        <button onClick={this.decrease}>-1</button>
+      </div>
+    );
+  }
+}
+
+decorate(Counter, {
+  number: observable,
+  increase: action,
+  decrease: action
+})
+
+export default observer(Counter);
+```
+- 상단에 MobX 관련 기능을 선언한 후, 코드 하단 쪽에 decorate 함수를 호출한 부분이 있다.
+- 해당 decorate가 Counter 컴포넌트에게 상태 변환을 할 수 있도록 도와주는 함수이다.
+- decorate 각 파라미터 설명
+	- 첫 번째 인자 : 상태와 연결할 컴포넌트
+	- 두 번째 인자 : Object타입, Key는 상태로 적용할 변수명 및 함수명, Value쪽은 각 Key에 맞는 요소에 적용할 액션(ex- observable:상태 관찰 대상, action: 상태 관찰 대상을 변화시킬 액션)
+- 마지막 줄의 observer는 observable로 선언한 상태 값(위 코드에서는 number값)이 변할 때, 컴포넌트 API인 forceUpdate()를 자동 호출하여 변경된 값이 화면에 반영된다.
+- 
+
 ## MobX의 단점
 - 디버깅 툴이 딱히 정해진 것이 없어서 state 추적이라도 해야하면 하나하나 콘솔에 찍어봐야 한다고 함.
 - 프로젝트의 규모가 어느 정도 있고, state가 많이 자주 변하는 경우에는 쓰기가 어렵다.
