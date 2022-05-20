@@ -70,7 +70,7 @@ const App = () => {
 		numberStore.increaseAction(3);
 	}
 
-	const onCilckDecrease = () => {
+	const onClickDecrease = () => {
 		numberStore.decreaseAction(2);
 	}
 
